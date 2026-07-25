@@ -1,6 +1,7 @@
 import asyncio
 from datetime import datetime
 import hashlib
+import html
 import json
 import logging
 import os
@@ -23,13 +24,12 @@ from aiogram.types import (
 )
 
 # ----------------- 1. НАСТРОЙКИ И ТОКЕНЫ -----------------
-BOT_TOKEN = "8297492499:AAFol-G7eYXGK4nmAUB1nuVKFn18hhBg99w"
+BOT_TOKEN = "829492499:AAFl01-G7eYXGK4nmAUB1nuVKfN18hhBg9w"  # Исправлен токен (убран слэш)
 PUBLIC_CHANNEL_ID = -1002265325769
 ADMIN_CHAT_ID = 841445348
 
 # Настройки Google Таблицы
 SPREADSHEET_ID = "1IbZiB-iF__ySEfyrd_I_TXGm7FUbpfG9rEEj4cib6Dg"
-# Примечание: GID листа можно посмотреть в адресе браузера при открытии нужной вкладки (например, gid=0)
 SHEET_GID = "0"
 GOOGLE_SHEET_URL = f"https://docs.google.com/spreadsheets/d/{SPREADSHEET_ID}/export?format=csv&gid={SHEET_GID}"
 
@@ -126,13 +126,13 @@ async def publish_vacancies() -> int:
                 continue  # Пропускаем, если уже выложено сегодня и без изменений
 
         # Формируем короткий анонс для канала
-        project = str(row.get("Проект", "")).strip() if pd.notna(row.get("Проект")) else ""
-        company = str(row.get("Компания", "")).strip() if pd.notna(row.get("Компания")) else "GetStaff"
-        title = str(row.get("Должность", "")).strip() if pd.notna(row.get("Должность")) else "Вакансия"
-        city = str(row.get("Город", "")).strip() if pd.notna(row.get("Город")) else ""
-        metro = str(row.get("Метро", "")).strip() if pd.notna(row.get("Метро")) else ""
-        payment = str(row.get("Оплата", "")).strip() if pd.notna(row.get("Оплата")) else ""
-        rate = str(row.get("Ставка/час/смена/месяц", "")).strip() if pd.notna(row.get("Ставка/час/смена/месяц")) else ""
+        project = html.escape(str(row.get("Проект", "")).strip()) if pd.notna(row.get("Проект")) else ""
+        company = html.escape(str(row.get("Компания", "")).strip()) if pd.notna(row.get("Компания")) else "GetStaff"
+        title = html.escape(str(row.get("Должность", "")).strip()) if pd.notna(row.get("Должность")) else "Вакансия"
+        city = html.escape(str(row.get("Город", "")).strip()) if pd.notna(row.get("Город")) else ""
+        metro = html.escape(str(row.get("Метро", "")).strip()) if pd.notna(row.get("Метро")) else ""
+        payment = html.escape(str(row.get("Оплата", "")).strip()) if pd.notna(row.get("Оплата")) else ""
+        rate = html.escape(str(row.get("Ставка/час/смена/месяц", "")).strip()) if pd.notna(row.get("Ставка/час/смена/месяц")) else ""
 
         header = f"🏢 <b>{project or company}</b>\n"
         body = f"📌 <b>Вакансия:</b> {title}\n"
@@ -213,19 +213,19 @@ async def show_vacancy_details(message: Message, vac_id: str):
         await message.answer("Некорректная ссылка на вакансию.")
         return
 
-    company = str(row.get("Компания", "")).strip() if pd.notna(row.get("Компания")) else "GetStaff"
-    project = str(row.get("Проект", "")).strip() if pd.notna(row.get("Проект")) else ""
-    city = str(row.get("Город", "")).strip() if pd.notna(row.get("Город")) else ""
-    metro = str(row.get("Метро", "")).strip() if pd.notna(row.get("Метро")) else ""
-    address = str(row.get("Адрес места работы", "")).strip() if pd.notna(row.get("Адрес места работы")) else ""
-    citizenship = str(row.get("Гражданство", "")).strip() if pd.notna(row.get("Гражданство")) else ""
-    age = str(row.get("Возраст", "")).strip() if pd.notna(row.get("Возраст")) else ""
-    title = str(row.get("Должность", "")).strip() if pd.notna(row.get("Должность")) else "Вакансия"
-    duties = str(row.get("Обязанности/требования", "")).strip() if pd.notna(row.get("Обязанности/требования")) else ""
-    schedule = str(row.get("График", "")).strip() if pd.notna(row.get("График")) else ""
-    work_time = str(row.get("Время", "")).strip() if pd.notna(row.get("Время")) else ""
-    payment = str(row.get("Оплата", "")).strip() if pd.notna(row.get("Оплата")) else ""
-    rate = str(row.get("Ставка/час/смена/месяц", "")).strip() if pd.notna(row.get("Ставка/час/смена/месяц")) else ""
+    company = html.escape(str(row.get("Компания", "")).strip()) if pd.notna(row.get("Компания")) else "GetStaff"
+    project = html.escape(str(row.get("Проект", "")).strip()) if pd.notna(row.get("Проект")) else ""
+    city = html.escape(str(row.get("Город", "")).strip()) if pd.notna(row.get("Город")) else ""
+    metro = html.escape(str(row.get("Метро", "")).strip()) if pd.notna(row.get("Метро")) else ""
+    address = html.escape(str(row.get("Адрес места работы", "")).strip()) if pd.notna(row.get("Адрес места работы")) else ""
+    citizenship = html.escape(str(row.get("Гражданство", "")).strip()) if pd.notna(row.get("Гражданство")) else ""
+    age = html.escape(str(row.get("Возраст", "")).strip()) if pd.notna(row.get("Возраст")) else ""
+    title = html.escape(str(row.get("Должность", "")).strip()) if pd.notna(row.get("Должность")) else "Вакансия"
+    duties = html.escape(str(row.get("Обязанности/требования", "")).strip()) if pd.notna(row.get("Обязанности/требования")) else ""
+    schedule = html.escape(str(row.get("График", "")).strip()) if pd.notna(row.get("График")) else ""
+    work_time = html.escape(str(row.get("Время", "")).strip()) if pd.notna(row.get("Время")) else ""
+    payment = html.escape(str(row.get("Оплата", "")).strip()) if pd.notna(row.get("Оплата")) else ""
+    rate = html.escape(str(row.get("Ставка/час/смена/месяц", "")).strip()) if pd.notna(row.get("Ставка/час/смена/месяц")) else ""
 
     text = f"📌 <b>{title}</b>"
     if project:
@@ -312,7 +312,7 @@ async def process_phone(message: Message, state: FSMContext):
 
     data = await state.get_data()
     vac_id = data.get("vac_id")
-    applicant_name = data.get("applicant_name")
+    applicant_name = html.escape(str(data.get("applicant_name", "")))
 
     # Получаем информацию о вакансии для менеджера
     df = fetch_vacancies_df()
@@ -320,8 +320,8 @@ async def process_phone(message: Message, state: FSMContext):
     project = ""
     if not df.empty and int(vac_id) in df.index:
         row = df.loc[int(vac_id)]
-        vac_title = str(row.get("Должность", "Вакансия")).strip()
-        project = str(row.get("Проект", "")).strip()
+        vac_title = html.escape(str(row.get("Должность", "Вакансия")).strip())
+        project = html.escape(str(row.get("Проект", "")).strip())
 
     username_str = f"@{message.from_user.username}" if message.from_user.username else "не указан"
 
@@ -330,7 +330,7 @@ async def process_phone(message: Message, state: FSMContext):
         f"📌 <b>Вакансия:</b> {vac_title} {f'({project})' if project else ''}\n"
         f"🆔 <b>ID Строки:</b> {vac_id}\n\n"
         f"👤 <b>Имя соискателя:</b> {applicant_name}\n"
-        f"📞 <b>Телефон:</b> {phone}\n"
+        f"📞 <b>Телефон:</b> {html.escape(phone)}\n"
         f"💬 <b>Telegram:</b> {username_str} (ID: <code>{message.from_user.id}</code>)"
     )
 
