@@ -23,12 +23,12 @@ from aiogram.types import (
 )
 
 # ----------------- 1. НАСТРОЙКИ И ТОКЕНЫ -----------------
-BOT_TOKEN = "829/492499:AAFl01-G7eYXGK4nmAUB1nuVKfN18hhBg9w"
+BOT_TOKEN = "8297492499:AAFol-G7eYXGK4nmAUB1nuVKFn18hhBg99w"
 PUBLIC_CHANNEL_ID = -1002265325769
 ADMIN_CHAT_ID = 841445348
 
 # Настройки Google Таблицы
-SPREADSHEET_ID = "1Tb7iR-if_ySEfyrd_I_TXGm7FUhpFG9rrFj4cib6Dg"
+SPREADSHEET_ID = "1IbZiB-iF__ySEfyrd_I_TXGm7FUbpfG9rEEj4cib6Dg"
 # Примечание: GID листа можно посмотреть в адресе браузера при открытии нужной вкладки (например, gid=0)
 SHEET_GID = "0"
 GOOGLE_SHEET_URL = f"https://docs.google.com/spreadsheets/d/{SPREADSHEET_ID}/export?format=csv&gid={SHEET_GID}"
